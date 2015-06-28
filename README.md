@@ -15,7 +15,7 @@ is debounced by 100ms to reduce CPU strain.
 # Usage
 
 ```javascript
-// ES7 Code
+// ES7
 
 import React from 'react';
 import centerComponent from 'react-center-component';
