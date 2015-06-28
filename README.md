@@ -1,5 +1,7 @@
 # React Center Component
 
+[![npm](https://img.shields.io/npm/v/react-center-component.svg?style=flat-square)](https://www.npmjs.com/package/react-center-component)
+
 This is a higher order component decorator. It centers a component with respect to the window.
 
 It listens for when its children are mounted, then it measures the size of 
