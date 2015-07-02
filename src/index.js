@@ -3,20 +3,22 @@ import {debounce} from 'lodash';
 
 /**
  * This is a higher order component decorator
- * 
- * It listens for when its children are mounted, then it measures the size of 
+ *
+ * It listens for when its children are mounted, then it measures the size of
  * these children on the dom. Then it updates the children with appropriate
  * top and left offsets.
- * 
+ *
  * Components that are wrapped with this decorator recieve two properties
  * topOffset and leftOffset, they are null before the component has mounted.
  *
  * When the window is resized, this component will reupdate its children. This process
  * is debounced by 100ms to reduce CPU strain
  */
-export default function centerComponent(ReactClass) {
+export default function centerComponent(DecoratedComponent) {
+  const componentClassName = DecoratedComponent.displayName || DecoratedComponent.name || 'Component';
+
   return class Centered extends React.Component {
-    static displayName = ReactClass.displayName + 'Centered'
+    static displayName = componentClassName + 'Centered'
     state = {
       topOffset: null,
       leftOffset: null
@@ -57,12 +59,14 @@ export default function centerComponent(ReactClass) {
       const {topOffset, leftOffset} = this.state;
 
       return (
-        <ReactClass 
-          ref="component" 
-          topOffset={topOffset} 
-          leftOffset={leftOffset} 
-          recenter={this.resizeChildNode}
-          {...this.props}/>
+        <DecoratedComponent
+          {...this.props}
+          ref="component"
+          topOffset={topOffset}
+          top={topOffset}
+          leftOffset={leftOffset}
+          left={leftOffset}
+          recenter={this.resizeChildNode}/>
       )
     }
   }
