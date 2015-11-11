@@ -18,10 +18,10 @@ export default function centerComponent(DecoratedComponent) {
   const componentClassName = DecoratedComponent.displayName || DecoratedComponent.name || 'Component';
 
   return class Centered extends React.Component {
-    static displayName = componentClassName + 'Centered'
+    static displayName = `Centered(${componentClassName})`
     state = {
       topOffset: null,
-      leftOffset: null
+      leftOffset: null,
     }
     componentDidMount() {
       this.resizeChildNode();
@@ -58,16 +58,15 @@ export default function centerComponent(DecoratedComponent) {
     render() {
       const {topOffset, leftOffset} = this.state;
 
-      return (
-        <DecoratedComponent
-          {...this.props}
-          ref="component"
-          topOffset={topOffset}
-          top={topOffset}
-          leftOffset={leftOffset}
-          left={leftOffset}
-          recenter={this.resizeChildNode}/>
-      )
+      return <DecoratedComponent
+        {...this.props}
+        ref="component"
+        topOffset={topOffset}
+        top={topOffset}
+        leftOffset={leftOffset}
+        left={leftOffset}
+        recenter={this.resizeChildNode}
+      />;
     }
   }
 }
