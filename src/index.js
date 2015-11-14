@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {debounce} from 'lodash';
 
 /**
@@ -14,10 +15,10 @@ import {debounce} from 'lodash';
  * When the window is resized, this component will reupdate its children. This process
  * is debounced by 100ms to reduce CPU strain
  */
-export default function centerComponent(DecoratedComponent) {
-  const componentClassName = DecoratedComponent.displayName || DecoratedComponent.name || 'Component';
+export default function centerComponent(Component) {
+  const componentClassName = Component.displayName || Component.name || 'Component';
 
-  return class Centered extends React.Component {
+  class DecoratedComponent extends React.Component {
     static displayName = `Centered(${componentClassName})`
     state = {
       topOffset: null,
@@ -32,34 +33,42 @@ export default function centerComponent(DecoratedComponent) {
       window.removeEventListener('resize', this._debouncedResize);
     }
     componentDidUpdate(prevProps) {
-      if (this.props.children != prevProps.children) {
-        // children are different, resize
+      if (this.props.children !== prevProps.children) {
+        // Children are different, resize
         this.resizeChildNode();
       }
     }
     resizeChildNode = () => {
-      const node = React.findDOMNode(this.refs.component);
+      const node = ReactDOM.findDOMNode(this.refs.component);
 
       const nodeSize = {
         height: node.clientHeight,
-        width: node.clientWidth
+        width: node.clientWidth,
       };
 
       const windowSize = {
         height: document.documentElement.clientHeight,
-        width: document.documentElement.clientWidth
+        width: document.documentElement.clientWidth,
       };
 
       this.setState({
-        topOffset: (windowSize.height - nodeSize.height)/2,
-        leftOffset: (windowSize.width - nodeSize.width)/2
+        topOffset: (windowSize.height - nodeSize.height) / 2,
+        leftOffset: (windowSize.width - nodeSize.width) / 2,
       });
     }
     render() {
-      const {topOffset, leftOffset} = this.state;
+      const {
+        props: {
+          ...rest,
+        },
+        state: {
+          topOffset,
+          leftOffset,
+        },
+      } = this;
 
-      return <DecoratedComponent
-        {...this.props}
+      return <Component
+        {...rest}
         ref="component"
         topOffset={topOffset}
         top={topOffset}
@@ -69,4 +78,6 @@ export default function centerComponent(DecoratedComponent) {
       />;
     }
   }
+
+  return DecoratedComponent;
 }
