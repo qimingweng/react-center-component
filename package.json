@@ -22,9 +22,7 @@
     "lodash": "^3.9.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.1.2",
-    "babel-preset-react": "^6.1.2",
-    "babel-preset-stage-0": "^6.1.2"
+    "babel": "^5.0.0"
   },
   "peerDependencies": {
     "react": "^0.14.0",
