@@ -4,6 +4,7 @@
   "description": "A higher order component decorator to center a component in the window",
   "main": "lib/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "babel src --out-dir lib"
   },
   "repository": {
