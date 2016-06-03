@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 
 /**
  * This is a higher order component decorator

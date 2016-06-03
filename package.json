@@ -19,7 +19,7 @@
   "author": "Qiming Weng",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^3.9.3"
+    "lodash": "^4.0.0"
   },
   "devDependencies": {
     "babel": "^5.0.0"
